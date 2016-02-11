@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'humble_rpi-plugin-nfc'
-  s.version = '0.1.1'
+  s.version = '0.1.2'
   s.summary = 'A humble_rpi plugin for reading NFC RFID tags (using the ruby-nfc gem) and publishing the identifier to the messaging broker'
   s.authors = ['James Robertson']
   s.files = Dir['lib/humble_rpi-plugin-nfc.rb']

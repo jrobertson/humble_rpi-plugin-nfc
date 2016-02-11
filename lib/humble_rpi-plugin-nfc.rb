@@ -13,6 +13,7 @@ class HumbleRPiPluginNFC
     @notifier = variables[:notifier]
     @device_id = variables[:device_id] || 'pi'
     @readers = NFC::Reader.all
+    @hashing = settings[:hashing] || true
 
   end
 
@@ -23,12 +24,12 @@ class HumbleRPiPluginNFC
         
     puts 'ready to detect RFID tags'
     
-    
     @readers[0].poll(Mifare::Classic::Tag, IsoDep::Tag, Mifare::Ultralight::Tag) do |tag|
       
       begin
 
-        notifier.notice "%s/nfc: detected %s" % [device_id, tag]
+        tag_id = @hashing ? tag.hash : tag
+        notifier.notice "%s/nfc: detected %s" % [device_id, tag_id]
 
       rescue Exception => e
         p e

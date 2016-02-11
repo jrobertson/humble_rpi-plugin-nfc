@@ -3,6 +3,7 @@
 # file: humble_rpi-plugin-nfc.rb
 
 require 'ruby-nfc'
+require 'digest/md5'
 
 
 class HumbleRPiPluginNFC
@@ -24,11 +25,12 @@ class HumbleRPiPluginNFC
         
     puts 'ready to detect RFID tags'
     
-    @readers[0].poll(Mifare::Classic::Tag, IsoDep::Tag, Mifare::Ultralight::Tag) do |tag|
+    @readers[0].poll(Mifare::Classic::Tag, 
+                     Mifare::Ultralight::Tag, IsoDep::Tag) do |tag|
       
       begin
-
-        tag_id = @hashing ? tag.hash : tag
+        
+        tag_id = @hashing ? (Digest::MD5.new << tag.to_s).to_s : tag
         notifier.notice "%s/nfc: detected %s" % [device_id, tag_id]
 
       rescue Exception => e

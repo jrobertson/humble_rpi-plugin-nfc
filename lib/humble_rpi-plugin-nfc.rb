@@ -37,6 +37,8 @@ class HumbleRPiPluginNFC
         p e
       end
       
+      sleep 0.2
+      
     end    
     
   end
